@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q & A</title>
+    <script>
+        function checkAnswer() {
+            var answer = document.getElementById("Q1").value.toLowerCase();
+            if (answer === "estella") {
+                window.location.href = "pip.html";
+            } else {
+                alert("Incorrect. Please try again.");
+            }
+        }
+    </script>
+</head>
+<style>
+    body {
+        background: #009c9491;
+        
+    }
+    #H {
+        margin-left: 27rem;
+        margin-top: 2rem;
+    }
+    #Q1 {
+        margin-left: 27rem;
+        margin-top: 2rem; 
+        width: 15rem;
+        height: 2rem;
+    }
+    .btn {
+        height: 2.2rem;
+        background: rgb(4, 189, 87);
+        color: rgb(255, 255, 255);
+        border-color: transparent;
+    }
+    .btn:hover {
+        height: 2.2rem;
+        background: rgb(4, 189, 87);
+        cursor: pointer;
+        border-color: black;
+    }
+</style>
+<body>
+    <h2 id="H">Who is the girl that Pip loved?</h2>
+    <input id="Q1" type="text" placeholder="Answer">
+    <button class="btn" onclick="checkAnswer()">Check</button>
+</body>
+</html>

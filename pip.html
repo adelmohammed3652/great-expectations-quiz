@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pip's Life - Great Expectations</title>
+    <style>
+        
+            body {
+        background: #009c9491;
+        
+    }
+        
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-top: 50px;
+        }
+
+        #photo-gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .photo {
+            width: 300px;
+            height: 300px;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #music-player {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        audio {
+            width: 300px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        #content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        #content h2 {
+            color: #ffffff;
+            margin-top: 40px;
+        }
+
+        #content p {
+            line-height: 1.6;
+        }
+
+        .section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-image {
+            flex: 0 0 40%;
+            margin-right: 20px;
+        }
+
+        .section-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .section-text {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pip's Life</h1>
+    <div id="music-player">
+        <audio controls autoplay loop>
+            <source src="background-mu" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div id="content">
+        <div class="section">
+            <div class="section-image">
+                <img src="assets/images/R.jpg" alt="Childhood">
+            </div>
+            <div class="section-text">
+                <h2>Childhood</h2>
+                <p>
+                    In his childhood, Pip lived with his sister, Mrs. Joe Gargery, and her husband, Joe Gargery.
+                    He spent his early years in the marshes of Kent, playing and exploring the countryside.
+                    Pip had a vivid imagination and often dreamed of becoming a gentleman, longing for a life of wealth and status.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-image">
+                <img src="assets/images/3071ba5867a5755fad621c495f5ab231.jpg" alt="Adulthood">
+            </div>
+            <div class="section-text">
+                <h2>Adulthood</h2>
+                <p>
+                    As Pip grew older, he moved to London to pursue his education and career. He became a clerk in a counting-house,
+                    working diligently to make a living. Despite his humble beginnings, Pip never forgot his aspirations and
+                    constantly yearned for a better life.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-image">
+                <img src="assets/images/p02jq9v3.jpg" alt="A Gentleman">
+            </div>
+            <div class="section-text">
+                <h2>A Gentleman</h2>
+                <p>
+                    Pip's life took an unexpected turn when he received a mysterious fortune from an anonymous benefactor.
+                    This newfound wealth allowed Pip to live as a gentleman, fulfilling his dreams of prosperity. He adopted a
+                    lavish lifestyle, associating himself with the upper class. However, Pip soon realized that material wealth
+                    did not bring him true happiness. Through a series of events and encounters, he learned valuable lessons about
+                    the importance of character, friendship, and compassion.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
