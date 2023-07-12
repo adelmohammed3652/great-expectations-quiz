@@ -77,6 +77,10 @@
             margin-top: 10px;
             font-weight: bold;
         }
+
+        #countdown {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -101,6 +105,8 @@
         var totalQuestionsPerPhase = 5;
         var score = 0;
         var userName = "";
+        var countdownInterval = null;
+        var countdownSeconds = 10;
 
         function startQuiz() {
             userName = document.getElementById("name-input").value;
@@ -118,21 +124,20 @@
             if (answer === correctAnswer) {
                 score++;
                 showFeedback("Well done, " + userName + "! That's correct.");
-            } else {
-                showFeedback("Oops! That's incorrect. The correct answer is: " + correctAnswer + ".");
-            }
-
-            currentQuestion++;
-            if (currentQuestion > totalQuestionsPerPhase) {
-                currentPhase++;
-                currentQuestion = 1;
-                if (currentPhase <= totalPhases) {
-                    showPhaseTransition(currentPhase);
+                currentQuestion++;
+                if (currentQuestion > totalQuestionsPerPhase) {
+                    currentPhase++;
+                    currentQuestion = 1;
+                    if (currentPhase <= totalPhases) {
+                        showPhaseTransition(currentPhase);
+                    } else {
+                        showCompletionMessage();
+                    }
                 } else {
-                    showCompletionMessage();
+                    showQuestion();
                 }
             } else {
-                showQuestion();
+                showFeedback("Oops! That's incorrect. Try again.");
             }
         }
 
@@ -158,12 +163,18 @@
             var scoreMessage = document.createElement("p");
             scoreMessage.textContent = "Your score: " + score + "/" + (totalPhases * totalQuestionsPerPhase);
 
+            var countdownMessage = document.createElement("p");
+            countdownMessage.id = "countdown";
+
             document.body.appendChild(completionMessage);
             document.body.appendChild(scoreMessage);
+            document.body.appendChild(countdownMessage);
+
+            startCountdown();
 
             setTimeout(function() {
                 window.location.href = "pip.html";
-            }, 10000);
+            }, countdownSeconds * 1000);
         }
 
         function showPhase(phaseNumber) {
@@ -271,6 +282,20 @@
         function showFeedback(message) {
             var feedback = document.getElementById("feedback");
             feedback.textContent = message;
+        }
+
+        function startCountdown() {
+            var countdownMessage = document.getElementById("countdown");
+            countdownMessage.textContent = "Redirecting in " + countdownSeconds + " seconds";
+
+            countdownInterval = setInterval(function() {
+                countdownSeconds--;
+                countdownMessage.textContent = "Redirecting in " + countdownSeconds + " seconds";
+
+                if (countdownSeconds === 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
         }
     </script>
 </body>
