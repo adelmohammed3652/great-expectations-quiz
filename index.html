@@ -106,7 +106,7 @@
         var score = 0;
         var userName = "";
         var countdownInterval = null;
-        var countdownSeconds = 10;
+        var countdownSeconds = 20;
 
         function startQuiz() {
             userName = document.getElementById("name-input").value;
@@ -223,6 +223,28 @@
             questionDiv.appendChild(feedback);
             document.getElementById("question-container").appendChild(questionDiv);
             document.getElementById("question-container").appendChild(scoreDisplay);
+
+            startTimer();
+        }
+
+        function startTimer() {
+            var timerDisplay = document.createElement("p");
+            timerDisplay.id = "timer";
+            timerDisplay.textContent = "Time remaining: " + countdownSeconds + " seconds";
+
+            document.getElementById("question-container").appendChild(timerDisplay);
+
+            var secondsRemaining = countdownSeconds;
+
+            var countdownInterval = setInterval(function() {
+                secondsRemaining--;
+                timerDisplay.textContent = "Time remaining: " + secondsRemaining + " seconds";
+
+                if (secondsRemaining === 0) {
+                    clearInterval(countdownInterval);
+                    checkAnswer();
+                }
+            }, 1000);
         }
 
         function getQuestionText() {
