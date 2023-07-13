@@ -81,6 +81,38 @@
         #countdown {
             margin-top: 20px;
         }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        /* Transition animation */
+        @keyframes teleport {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .teleport-animation {
+            animation: teleport 1s ease-in-out;
+        }
     </style>
 </head>
 <body>
@@ -92,8 +124,10 @@
 
     <div id="quiz-container" style="display: none;">
         <h2 id="user-name"></h2>
-        <div id="phase-container">
-            <h3 id="phase-text"></h3>
+        <div id="phase-container" class="modal">
+            <div class="modal-content">
+                <h3 id="phase-text"></h3>
+            </div>
         </div>
         <div id="question-container"></div>
     </div>
@@ -106,7 +140,7 @@
         var score = 0;
         var userName = "";
         var countdownInterval = null;
-        var countdownSeconds = 20;
+        var countdownSeconds = 10;
 
         function startQuiz() {
             userName = document.getElementById("name-input").value;
@@ -141,15 +175,31 @@
             }
         }
 
+        function skipQuestion() {
+            currentQuestion++;
+            if (currentQuestion > totalQuestionsPerPhase) {
+                currentPhase++;
+                currentQuestion = 1;
+                if (currentPhase <= totalPhases) {
+                    showPhaseTransition(currentPhase);
+                } else {
+                    showCompletionMessage();
+                }
+            } else {
+                showQuestion();
+            }
+        }
+
         function showPhaseTransition(phaseNumber) {
-            document.getElementById("phase-container").innerHTML = "";
-            document.getElementById("phase-container").innerHTML = "<h3 id='phase-text'>Phase " + phaseNumber + "</h3>";
-            document.body.style.backgroundColor = "black";
+            var phaseModal = document.getElementById("phase-container");
+            var phaseText = document.getElementById("phase-text");
+            phaseText.textContent = "Phase " + phaseNumber;
+            phaseModal.style.display = "block";
 
             setTimeout(function() {
-                document.body.style.backgroundColor = "#009c9491";
+                phaseModal.style.display = "none";
                 showQuestion();
-            }, 3000);
+            }, 1000);
         }
 
         function showCompletionMessage() {
@@ -173,8 +223,15 @@
             startCountdown();
 
             setTimeout(function() {
-                window.location.href = "pip.html";
+                teleportToNextPage();
             }, countdownSeconds * 1000);
+        }
+
+        function teleportToNextPage() {
+            document.body.classList.add("teleport-animation");
+            setTimeout(function() {
+                window.location.href = "pip.html";
+            }, 1000);
         }
 
         function showPhase(phaseNumber) {
@@ -210,6 +267,13 @@
                 }
             };
 
+            var skipButton = document.createElement("button");
+            skipButton.classList.add("btn");
+            skipButton.textContent = "Skip This Question";
+            skipButton.onclick = function() {
+                skipQuestion();
+            };
+
             var scoreDisplay = document.createElement("p");
             scoreDisplay.id = "score";
             scoreDisplay.textContent = "Score: " + score;
@@ -220,31 +284,10 @@
             questionDiv.appendChild(questionLabel);
             questionDiv.appendChild(questionInput);
             questionDiv.appendChild(submitButton);
+            questionDiv.appendChild(skipButton);
             questionDiv.appendChild(feedback);
             document.getElementById("question-container").appendChild(questionDiv);
             document.getElementById("question-container").appendChild(scoreDisplay);
-
-            startTimer();
-        }
-
-        function startTimer() {
-            var timerDisplay = document.createElement("p");
-            timerDisplay.id = "timer";
-            timerDisplay.textContent = "Time remaining: " + countdownSeconds + " seconds";
-
-            document.getElementById("question-container").appendChild(timerDisplay);
-
-            var secondsRemaining = countdownSeconds;
-
-            var countdownInterval = setInterval(function() {
-                secondsRemaining--;
-                timerDisplay.textContent = "Time remaining: " + secondsRemaining + " seconds";
-
-                if (secondsRemaining === 0) {
-                    clearInterval(countdownInterval);
-                    checkAnswer();
-                }
-            }, 1000);
         }
 
         function getQuestionText() {
